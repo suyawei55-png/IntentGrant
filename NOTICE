@@ -1,0 +1,88 @@
+IntentGrant — Physical Intent Authorization Protocol Specification
+Copyright 2026 Su Yawei (苏亚伟)
+
+This repository contains the IntentGrant protocol specification,
+originally authored by Su Yawei (苏亚伟).
+
+-----------------------------------------------------------------------
+1. Original authorship and provenance
+-----------------------------------------------------------------------
+The IntentGrant protocol specification was originally authored by
+Su Yawei (苏亚伟).
+
+  - Original definition (v1.0):        2026-07
+  - v2.0:                              2026-08
+  - Neutral Release (v2.0):            2026-09-06
+  - Initial public disclosure of the
+    framework:                         TRAE community forum, 2026-08
+
+This repository serves as proof-of-record for the protocol's original
+definition and implementation. The normative specification is authored
+in Chinese; this file and the README are provided in English for
+international review.
+
+-----------------------------------------------------------------------
+2. Specification neutrality
+-----------------------------------------------------------------------
+The normative specification is intentionally vendor-neutral and
+form-factor agnostic. "IntentGrant" refers to the protocol, not to any
+particular product, vendor, or hardware form. A confirmation endpoint
+may be implemented as a ring, watch, band, glasses, or a physical
+button — whichever fits the scenario.
+
+IntentGrant is designed as an implementation profile aligned with
+existing and emerging standards:
+
+  - RFC 9396 (OAuth 2.0 Rich Authorization Requests)
+  - IETF Secure Intent Protocol (draft)
+  - OAuth 2.0 Token Exchange (RFC 8693)
+  - OAuth 2.0 DPoP (RFC 9449) / mTLS (RFC 8705)
+
+It is not a competing proprietary protocol.
+
+-----------------------------------------------------------------------
+3. Implementation status — READ BEFORE EVALUATING
+-----------------------------------------------------------------------
+IMPORTANT: All capability claims in this repository are graded in
+Chapter 12 ("Implementation Status Statement") of the normative
+specification, using three levels:
+
+  - Implemented (prototype)
+  - Design intent — depends on the mass-production secure version
+  - Future work
+
+Claims relating to secure-element (SE) chip signing, physical tamper
+response, "private key never leaves the chip", and biometric binding
+are DESIGN INTENT at the prototype stage. They are NOT to be
+represented as implemented capabilities.
+
+Readers, reviewers, and evaluators must rely on Chapter 12 as the
+authoritative statement of current scope. A working prototype
+demonstrates execution capability; it does not constitute commercial
+validation.
+
+-----------------------------------------------------------------------
+4. Trademarks
+-----------------------------------------------------------------------
+"IntentGrant" is used as the name of this protocol specification.
+No license is granted to use the trade names, trademarks, service
+marks, or product names of the specification author, except as
+required for reasonable and customary use in describing the origin
+of the work.
+
+-----------------------------------------------------------------------
+5. License and current repository status
+-----------------------------------------------------------------------
+Licensed under the Apache License, Version 2.0. See the LICENSE file
+for the full license text.
+
+STATUS NOTE: This repository is currently PRIVATE and is maintained as
+a proof-of-record. The Apache 2.0 grant set out in the LICENSE file
+becomes operative upon public release of this repository. Prior to
+that public release, no rights to use, reproduce, or distribute the
+contents are granted.
+
+-----------------------------------------------------------------------
+6. Contact
+-----------------------------------------------------------------------
+Su Yawei (苏亚伟) — specification author, IntentGrant.
