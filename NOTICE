@@ -15,6 +15,7 @@ Su Yawei (苏亚伟).
   - Neutral Release (v2.0):            2026-09-06
   - Initial public disclosure of the
     framework:                         TRAE community forum, 2026-08
+  - Consumer Profile (IG-Lite) v0.1–v0.2:  2026-09
 
 This repository serves as proof-of-record for the protocol's original
 definition and implementation. The normative specification is authored
@@ -76,11 +77,18 @@ of the work.
 Licensed under the Apache License, Version 2.0. See the LICENSE file
 for the full license text.
 
-STATUS NOTE: This repository is currently PRIVATE and is maintained as
-a proof-of-record. The Apache 2.0 grant set out in the LICENSE file
-becomes operative upon public release of this repository. Prior to
-that public release, no rights to use, reproduce, or distribute the
-contents are granted.
+STATUS NOTE: The repository is public as of 2026-09-06. The Apache
+License 2.0 is operative.
+
+It functions both as proof-of-record for the protocol's original
+definition and as the open review channel for drafts, including the
+Consumer Profile (IG-Lite) v0.1–v0.2.
+
+Implementation-status claims are graded in the specifications
+themselves; nothing in this repository should be read as a claim of
+production deployment, external customer validation, or standards-body
+recognition. The IntentGrant Foundation referenced in project
+communications is in setup, not incorporated.
 
 -----------------------------------------------------------------------
 6. Contact
