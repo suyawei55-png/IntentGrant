@@ -19,10 +19,16 @@ Su Yawei (苏亚伟).
   - IG-Lite English editions:          2026-09
 
 This repository serves as proof-of-record for the protocol's original
-definition and implementation. The normative specification is authored
-in Chinese; non-normative English translations of the consumer profile
-and its pseudocode reference are published alongside it. This file and
-the README are provided in English for international review.
+definition and implementation. The Core specification and the IG-Lite
+specification are authored in Chinese; those Chinese texts are the
+normative sources of record. The Chinese pseudocode reference is
+informative and is the source for its English translation. All English
+editions are non-normative translations provided for international
+review. If an English translation conflicts with its Chinese source,
+the Chinese source controls; the inconsistency is a translation defect,
+not an alternative interpretation or a divergence between co-equal
+language editions. Both language editions reflect the 2026-09-25
+v0.2.1 cross-reference errata.
 
 -----------------------------------------------------------------------
 2. Specification neutrality

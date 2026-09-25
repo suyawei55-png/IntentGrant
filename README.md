@@ -75,11 +75,15 @@ interop claims (see IG-Lite §2.2–2.3).
 
 ## Consumer Profile — IG-Lite v0.2.1 (draft)
 
-`IG-LITE.md` specifies the **consumer-facing profile** of the protocol family; a
-non-normative English translation is published alongside it as `IG-LITE.en.md`. v0.1.1
-established the informed-consent evidence baseline (disclosure objects, physical
-confirmation capture, grants, mechanism-graded assurance, neutral hash custody).
-**v0.2 closes the two remaining gaps** in that baseline:
+`IG-LITE.md` is the normative Chinese source for the **consumer-facing profile** of the
+protocol family; `IG-LITE.en.md` is its non-normative English translation. Both files now
+reflect the 2026-09-25 v0.2.1 cross-reference errata, with no change to mechanism
+semantics. If the English translation conflicts with the Chinese source, the Chinese
+source controls; the inconsistency is a translation defect, not an alternative
+interpretation or a divergence between co-equal language editions. v0.1.1 established the
+informed-consent evidence baseline (disclosure objects, physical confirmation capture,
+grants, mechanism-graded assurance, neutral hash custody). **v0.2 closes the two remaining
+gaps** in that baseline:
 
 - **Disclosure sufficiency (§6)** — a machine-readable **Disclosure Baseline Schema
   Registry** translating current statutory disclosure obligations into `required` fields
@@ -92,9 +96,9 @@ confirmation capture, grants, mechanism-graded assurance, neutral hash custody).
   and display. Delivery tiers are orthogonal to assurance levels (§5.6: combined level =
   max).
 
-The complete evidence chain in one sentence: *everything that had to be said was said;
-what was said was not altered; what cannot be altered was actually offered to the user;
-and what the user saw was authorized by the user* (§6.1).
+The complete evidence chain in one sentence: *the disclosure was complete; it remained
+intact; that same disclosure was actually presented for review; and the person
+affirmatively authorized the action as presented* (§6.1).
 
 Three design positions distinguish it from the core specification (unchanged from v0.1):
 
@@ -102,22 +106,20 @@ Three design positions distinguish it from the core specification (unchanged fro
 |---|---|---|
 | **Assurance anchor** | endpoint private-key signatures (in-SE signing is production design intent); no CA-certified legal-effect track is defined | customer-service dispute-resolution grade |
 | **Confirmation endpoint** | independent endpoints incl. dedicated hardware | in-band first (phone / app / wearable); hardware optional, graded by capability |
-| **Custody model** | in-domain audit trail | neutral custodian as a hash log — *hash now, reveal on dispute* |
+| **Custody model** | in-domain audit trail | neutral Custodian as a hash log — *hash now, reveal on dispute* |
 
 The profile grades confirmation endpoints by **Device Capability Class (DCC)**, and now
 grades *delivery* by the same honesty discipline: what a device can attest (including
 `secure_clock`) decides what evidence level it may claim. Overstating either downgrades
 the evidence to the actual mechanism — the claim takes the hit, not the user.
 
-**Status:** draft v0.2.1, authored in Chinese, open for community review. v0.2.1 is a
-cross-reference erratum with no change to mechanism semantics: it corrects the Core/CA
-attribution, disambiguates Core architecture layers (Layer 0–Layer 3) from the LoA levels
-(L0–L3), and makes the terminology self-contained. The Registry schemas and D1/D2 receipts
-are **specification-defined**; the pseudocode-level reference covers the issuance fail
-branch, fidelity checks and nonce-hash computation. Device-signed delivery channels await
-DCC-B+ hardware. **"Specified" ≠ "implemented"** — the implementation-status statement
-(§12) is normative for all external claims. The neutral-custodian role has **no**
-production implementation yet.
+**Status:** draft v0.2.1, open for community review. v0.2.1 is a cross-reference erratum;
+mechanism semantics remain those introduced in v0.2. The Registry schemas and D1/D2
+receipts are **specification-defined**; the pseudocode-level reference covers the issuance
+fail branch, fidelity checks and nonce-hash computation. Device-signed delivery channels
+await DCC-B+ hardware. **"Specified" ≠ "implemented"** — the requirements reflected in
+§12 of the normative Chinese specification govern all external claims. The neutral
+Custodian role has **no** production implementation yet.
 
 ## Repository contents
 
@@ -135,10 +137,11 @@ intentgrant/
 │   └── SPECIFICATION.pdf           specification, for external distribution
 ├── profiles/
 │   └── lite/
-│       ├── IG-LITE.md                 IG-Lite consumer profile, v0.2.1 (Chinese, normative)
-│       ├── IG-LITE.en.md              English translation of the consumer profile
-│       ├── IG-LITE-PSEUDOCODE.md      pseudocode-level reference, v0.2.1 (Chinese)
-│       └── IG-LITE-PSEUDOCODE.en.md   English translation of the pseudocode reference
+│       ├── IG-LITE.md                 IG-Lite consumer profile, v0.2.1 (normative Chinese)
+│       ├── IG-LITE.en.md              non-normative English translation of v0.2.1
+│       ├── IG-LITE-PSEUDOCODE.md      informative reference (v0.2.1: required-fail
+│       │                              branch, fidelity checks, nonce-hash)
+│       └── IG-LITE-PSEUDOCODE.en.md   non-normative English pseudocode translation
 └── bindings/
     └── README.md                   transport bindings (IG-MCP interface: to be added)
 ```
@@ -166,13 +169,14 @@ constitute commercial validation.
 - **Role:** This repo serves both as *proof-of-record* for the protocol's original definition
   and implementation, and as the open review channel for drafts, including the Consumer
   Profile (IG-Lite) v0.1–v0.2.1.
-- **Language:** The normative specs (`core/SPECIFICATION.md`, `profiles/lite/IG-LITE.md`) are
-  authored in Chinese. Non-normative English translations of the consumer profile and its
-  pseudocode reference are published alongside them as `IG-LITE.en.md` and
-  `IG-LITE-PSEUDOCODE.en.md`; the Chinese source controls if the two diverge. In the English
-  editions, Chinese statutory provisions are cited as `Article N`, while `§N` is reserved for
-  sections of the IG-Lite specification. This README and the `NOTICE` file are provided in
-  English for international review.
+- **Language:** The Chinese Core and IG-Lite specifications are the normative sources of
+  record. The Chinese pseudocode is informative. Their English counterparts
+  (`IG-LITE.en.md`, `IG-LITE-PSEUDOCODE.en.md`) are non-normative translations for
+  international review. If a translation conflicts with its Chinese source, the Chinese
+  source controls and the mismatch is a translation defect, not an alternative
+  interpretation. Both language editions reflect v0.2.1. In the English translations,
+  Chinese statutory provisions use `Article N`; `§N` is reserved for IG-Lite sections.
+  This README and the `NOTICE` file are also provided in English for international review.
 - **Public disclosure:** An initial framework was published on the TRAE community forum in
   **Aug 2026**; the full Neutral Release (v2.0) of the specification was completed
   **2026-09-06**.

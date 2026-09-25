@@ -2,18 +2,18 @@
 
 ## 消费者物理意图授权配置文件规范
 
-**IntentGrant Consumer Profile Specification (IG-Lite) v0.2**
+**IntentGrant Consumer Profile Specification (IG-Lite) v0.2.1**
 
 | 项目 | 内容 |
 | --- | --- |
 | 规范名称 | IntentGrant 消费者物理意图授权配置文件（IG-Lite）规范 |
-| 版本 | v0.2.1（本文档，2026-09-25 交叉引用勘误）；v0.2（2026-09-20）；v0.1（2026-09-12 首版）；v0.1.1（2026-09-19 开源发布版） |
-| 发布日期 | 2026-09-20（起草稿） |
+| 版本 | v0.2.1（本文档，2026-09-25 交叉引用勘误）；v0.2（2026-09-20）；v0.1.1（2026-09-19 开源发布版）；v0.1（2026-09-12 首版） |
+| 发布日期 | 2026-09-25（起草稿） |
 | 协议设计方 | 苏亚伟（Su Yawei） |
 | 上游规范 | 《IntentGrant 物理意图授权协议规范》v2.0（中立化版本，2026-09-06），下文简称 **Core v2.0** |
 | 文档状态 | 起草稿 — Standards Track，面向中文 AIOS（AI 操作系统）社区评议 |
 | 许可证 | Apache License 2.0（规范文本与参考实现） |
-| 配套发布物 | 《IG-Lite 参考实现-伪代码》（规范级参考实现，随 v0.2 同步扩展）；《IntentGrant MCP Server 接口定义 v0.1》（IG-MCP，接口层实现，独立文档——本规范保持传输层中立，见 §2.4） |
+| 配套发布物 | 《IG-Lite 参考实现-伪代码》（规范级参考实现，随 v0.2.1 同步）；《IntentGrant MCP Server 接口定义 v0.1》（IG-MCP，接口层实现，独立文档——本规范保持传输层中立，见 §2.4） |
 | 关键词 | 消费者 Profile、弱表面、Disclosure Object、呈现承诺、物理确认、LoA、DCC、判责链、告知基线、Schema Registry、送达回执、A2A auth-required、AP2 mandate、FIDO UP/UV |
 | 适用范围 | 消费级 AI Agent 高后果动作之前的知情同意捕获、凭证签发与证据留存 |
 
@@ -818,7 +818,7 @@ PAE **必须**向控制端应用提供能力声明（GATT 读取或配对注册�
 
 **司法场景的证据重构（R-18）**：披露原文 N 日过期的设计依据是**客服判责窗口**，不是诉讼时效——普通民事诉讼时效为三年（《民法典》§188 [S39]）。超出 N 窗口的司法争议按以下路径重构证据，本规范明示此取舍：
 
-1. 托管方原文已过期销毁，但 hash 链**永久留存**；
+1. 平台/控制端持有的披露原文已按 N 参数过期销毁，但托管方仅存的 hash 链**永久留存**；
 2. 争议时由**持有原文的一方**出示内容（平台订单记录受电商法 §31 三年留存约束；用户侧 Grant 副本含披露快照），计算其 hash 与托管链上的 `disclosure_hash` 对齐——一致即证明"当时披露的内容与今日出示的一致"，此即"hash 先行、原文后验"（hash now, reveal later）架构；
 3. 若平台侧亦无原文或对齐失败，按证据规则由负举证责任的一方承担不利后果（方向与最高法银行卡司法解释一致：主张授权交易者举证 [S34]）——举证压力压给记录的控制方，而非消费者。
 
@@ -1014,11 +1014,11 @@ IG-Lite 捕获的是**同意**，故动作模式**必须**高于在场信号—�
 | Receipt | 执行回执，`executed_action_hash` 与披露对齐（TOCTOU 闭合） |
 | mandate_ref | Grant 对 AP2 Checkout Mandate `checkout_hash` 的单向引用 |
 | attested_by | 事件签名主体标注：`device`（设备自证）/ `app`（应用自证） |
-| 判责链 | 意图捕获→披露→确认→执行的四段 hash 链（v0.2 起披露段含 D1/D2 送达证明） |
-| 托管方 | CT 式 append-only hash 日志运营方（不存原文、不判责） |
+| 判责链（Accountability Chain） | 意图捕获→披露→确认→执行的四段 hash 链（v0.2 起披露段含 D1/D2 送达证明）；保留责任归属所需证据，但自身不直接判定法律责任 |
+| 托管方（Custodian） | CT 式 append-only hash 日志运营方（不存原文、不判责） |
 | N 参数 | 披露原文留存天数（场景可调下限，evidence_rules_version 锁定） |
-| 豁免确认 | 同 hash 窗口内**免重复播报但仍需物理确认**的确认方式，必记审计层（§10.1.3） |
-| 元确认 | 关于确认体系的确认本身（如 Access Grant 签发确认），不占会话配额（§10.1.2） |
+| 免重复播报确认（repeat-announcement-exempt confirmation） | 同 hash 窗口内**免重复播报但仍需物理确认**的确认方式，必记审计层（§10.1.3） |
+| 元确认（meta-confirmation） | 关于确认体系的确认本身（如 Access Grant 签发确认），不占会话配额（§10.1.2） |
 | confirm-required | 本规范定义的确认请求状态（A2A auth-required 的等价消费入口） |
 
 PAE、控制端应用、控制平面等术语见 §2 的工作定义（与 Core v2.0 术语体系一致）；本表仅列本 Profile 新增术语。
