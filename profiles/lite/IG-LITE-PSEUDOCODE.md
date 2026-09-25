@@ -3,7 +3,7 @@
 > 性质：**伪代码级（pseudocode-level）**——非可执行实现。密码学原语（JCS 规范化、SHA-256、签名、CSPRNG）全部委托平台密码学库，本文件不内嵌任何算法细节；无 BLE 栈、无密钥管理、无真实持久化。
 > 与规范的关系：**规范为准（normative），本文件为说明性（informative）**。字段名与流程步骤逐段引用《IG-Lite v0.2 规范》章节；所有能力声明以规范 §12 实现状态声明为准。
 > 用途：向社区评议者展示披露 → 完备性校验 → 确认 → 凭证 → 回执 → 送达证明的最小闭环语义与字段流。
-> 版本：基于《IG-Lite-v0.1-参考实现-伪代码》扩展（v0.1 文件保留不动，作为 v0.1.1 开源发布物档案）。**v0.2 新增三段：§1.5 required 完备性校验（含 fail 分支）、§8 Delivery Receipt（D1，含 nonce）、§9 Transit Fidelity 校验（D2）**；§1 增量修订（`schema_ref`/`delivery_tier` 字段）。
+> 版本：基于《IG-Lite-v0.1-参考实现-伪代码》扩展（v0.1 文件保留不动，作为 v0.1.1 开源发布物档案）。**v0.2 新增三段：§1.5 required 完备性校验（含 fail 分支）、§8 Delivery Receipt（D1，含 nonce）、§9 Transit Fidelity 校验（D2）**；§1 增量修订（`schema_ref`/`delivery_tier` 字段）。**v0.2.1（2026-09-25）**：随规范勘误同步——审计层占位函数改名 `persist_audit`/`mark_audit`（原 `persist_L3`/`mark_L3`，L 简写收归保障等级），正文层名指称对齐 §2 编号消歧；无语义变更。
 
 ## 覆盖范围（附录 B 最小闭环 ＋ v0.2 扩展）
 
@@ -19,7 +19,7 @@
 | 8. Delivery Receipt 生成（D1，含 nonce） | §4.7.1 / §5.6 | **v0.2 新增** |
 | 9. Transit Fidelity 校验（D2） | §4.7.2 | **v0.2 新增** |
 
-**不覆盖（诚实边界）**：L0 配对与绑定流程（Core v2.0 第 4 章 + §3.5 关联模型与 `association_model` 记录）、§6.2 Registry 治理与 schema 发布流程（本文件假定 schema 已经 Registry 获取并本地缓存）、§8 托管方提交协议全量、§10.2 频控状态机全量、跨设备路由（§5.4）、DCC-B 以上设备的 TEE 安全时钟实现（§4.7.1 安全时间源路径仅示范调用位置）——为后续参考实现范围。
+**不覆盖（诚实边界）**：激活层配对与绑定流程（Core v2.0 第 4 章 + §3.5 关联模型与 `association_model` 记录）、§6.2 Registry 治理与 schema 发布流程（本文件假定 schema 已经 Registry 获取并本地缓存）、§8 托管方提交协议全量、§10.2 频控状态机全量、跨设备路由（§5.4）、DCC-B 以上设备的 TEE 安全时钟实现（§4.7.1 安全时间源路径仅示范调用位置）——为后续参考实现范围。
 
 ## 0. 前置：常量与依赖
 
@@ -70,7 +70,7 @@ function build_disclosure(action_intent, context_template, sensitive: bool):
         "evidence_rules_version": current_rules_version()
     }
     d["disclosure_hash"] = b64url(SHA256(JCS(d 减去 disclosure_hash 字段)))
-    persist_L3(d)                                          # 判责链第 1 段：意图捕获留痕（§3.4）
+    persist_audit(d)                                          # 判责链第 1 段：意图捕获留痕（§3.4）
     state = "drafted"                                      # §4.4 状态机
     return d
 ```
@@ -103,9 +103,9 @@ function on_issue_challenge(d):
     verdict = validate_required(d)
     if verdict == FAIL(reason):
         state = "rejected_schema"                          # §4.4 新增前置态
-        persist_L3({"event": "rejected_schema",
+        persist_audit({"event": "rejected_schema",
                     "schema_ref": d["schema_ref"],
-                    "reason": reason})                     # 拒签留痕入 L3（不含披露原文——§8 托管内容下限同构）
+                    "reason": reason})                     # 拒签留痕入审计层（不含披露原文——§8 托管内容下限同构）
         return ABORT                                       # 拒绝生成 challenge：交易走不到确认环节（§6.3 第 1 环）
     return issue_challenge(d)
     # 注意分工（§6.3 第 2 环）：hash 保证完整性，本函数保证完备性——两条机制不得互相冒名
@@ -119,7 +119,7 @@ function present(d):
     triple = render_structured_triple(                   # 动作 × 对方 × 数额（弱表面播报形态）
         d["rendered"], d["counterparty"], d["amount"])
     t_broadcast = now()
-    speak_or_display(triple)                              # TTS 或屏显；渲染留痕入 L3（§3.2）——v0.2 起即 D0（§3.3/§5.6）
+    speak_or_display(triple)                              # TTS 或屏显；渲染留痕入审计层（§3.2）——v0.2 起即 D0（§3.3/§5.6）
     hold_at_least(PRESENTATION_MIN_MS)                    # 最短呈现时长（§3.2）
     state = "presented"
     return t_broadcast                                    # 静默期与 T 窗口起点（§10.1.3）
@@ -135,7 +135,7 @@ function issue_challenge(d):
         "issued_at":       now_iso8601(),
         "expires_at":      now_iso8601() + CHALLENGE_TTL_SECONDS
     }
-    persist_L3(c)                                         # 禁录 do_id（§8 托管内容下限）
+    persist_audit(c)                                         # 禁录 do_id（§8 托管内容下限）
     state = "challenge_issued"
     return c
 ```
@@ -194,7 +194,7 @@ function issue_grant(d, c, dcc_class):
     g["verify_key_fingerprint"] = fingerprint_of(key_of(g["attested_by"]))
     # 验证公钥随凭证分发：争议方无需回连注册表即可验签（§4.2）
 
-    persist_L3(g)                                          # 判责链第 3 段：确认留痕
+    persist_audit(g)                                          # 判责链第 3 段：确认留痕
     return g
 ```
 
@@ -213,8 +213,8 @@ function on_action_executed(execution_record):
     if aligns(r["executed_action_hash"], d, rules):
         r["alignment"] = "ALIGNED"; state = "receipted"    # TOCTOU 闭合（判责链第 4 段）
     else:
-        r["alignment"] = "VIOLATED"; mark_L3("越权执行")   # 不对齐 = 凭证链不为其提供授权证明（§4.5/§11.1）
-    persist_L3(r)
+        r["alignment"] = "VIOLATED"; mark_audit("越权执行")   # 不对齐 = 凭证链不为其提供授权证明（§4.5/§11.1）
+    persist_audit(r)
     submit_to_custodian([ d["disclosure_hash"], g["grant_id"], r["executed_action_hash"] ])
     # §8 托管提交：仅 hash 与时间戳，禁止 do_id 与任何原文要素
     return r
@@ -236,7 +236,7 @@ function confirm_frequency_guard(action):
     return ALLOW
 
 on same_disclosure_re-request(hash, dt):
-    if dt < 30s:   mark_L3("Agent 违规：30 秒内重复请求确认")   # §10.1.2
+    if dt < 30s:   mark_audit("Agent 违规：30 秒内重复请求确认")   # §10.1.2
     if dt < T:     skip_rebroadcast(); require_physical_confirm()  # §10.1.3 豁免语义：免播报不免按键
     else:          restart_from(step 2)                      # 超出 T 窗口：完整重放
 ```
@@ -277,7 +277,7 @@ function generate_delivery_receipt(d, render_session):
         "render_duration_ms": duration_proof["render_duration_ms"] 或 duration(t_start, t_end),
         "signature":     sign(device_key, JCS(r1 减去 signature 字段))
     }
-    persist_L3(r1)
+    persist_audit(r1)
     if g exists: g["delivery_receipt_ref"] = r1["receipt_id"]   # 回填关联（重签场景见 §9 串链）
     submit_to_custodian([ r1["content_hash"], r1["receipt_id"] ])   # 回执哈希入托管（§8/C.8 采纳）
     return r1
@@ -314,22 +314,22 @@ function render_with_fidelity(source_payload, source_anchor):
                    # 防源平台事后重铸新版本哈希、把偷换伪装成正常 match
 
     r2["fidelity_verdict"] = (r2["rendered_content_hash"] == baseline ? "match" : "mismatch")
-    persist_L3(r2)
+    persist_audit(r2)
 
     if r2["fidelity_verdict"] == "mismatch":
         mark_chain(r2["prior_receipt_id"], "VIOLATED")     # 该链状态 VIOLATED（§4.7.2）
-        mark_L3("中转保真 mismatch：中转方或源平台改动待判")   # 判责归属：改的一方持对方证据反证（§4.7.2）
+        mark_audit("中转保真 mismatch：中转方或源平台改动待判")   # 判责归属：改的一方持对方证据反证（§4.7.2）
         require_new_disclosure_chain()                     # 后续披露须新开链；部分字段更新走增量重渲染＋全量重签
         return r2                                          # VIOLATED 链不进入确认环节（与 rejected_schema 同构的硬闸）
 
     if source_anchor.mode == "timestamp_only":
-        mark_L3("回执限审计参考（仅时间戳路径，不得作采信级中转保真主张）")   # §4.7.2 分级
+        mark_audit("回执限审计参考（仅时间戳路径，不得作采信级中转保真主张）")   # §4.7.2 分级
     return r2
 ```
 
 ## 诚实边界（与 §12 一致）
 
-- 本文件为伪代码：`persist_L3` / `broadcast` / `route_*` / `custodian_lookup_*` 均为占位调用，无真实实现。
+- 本文件为伪代码：`persist_audit` / `broadcast` / `route_*` / `custodian_lookup_*` 均为占位调用，无真实实现。
 - `attested_by: "device"`（DCC-B 路径）与 `secure_clock_now()`（安全时间源）仅示范调用位置——设备端签名与 TEE 保护区时钟为 §12「设计意图」，当前无硬件具备。
 - §8/§9 两个 v0.2 新增段落为**语义设计**级（规范 §12 实现状态声明：D1/D2 凭证结构＝规范定义，工程实现未开始）——本文件展示字段流与判定逻辑，不构成"已实现"声明。
 - 托管方提交在试点期为降级单日志模式，降级状态须公开声明（§8 独立性条款）；回执哈希入托管（C.8）的熵前提：计算输入含高熵 `receipt_id` 与 per-receipt nonce（§8）。

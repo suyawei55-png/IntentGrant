@@ -73,7 +73,7 @@ IG-Lite v0.2 composes with AP2 Checkout Mandates (`mandate_ref` → `checkout_ha
 mapping) and consumes the A2A `auth-required` task state; both are semantic mappings, not
 interop claims (see IG-Lite §2.2–2.3).
 
-## Consumer Profile — IG-Lite v0.2 (draft)
+## Consumer Profile — IG-Lite v0.2.1 (draft)
 
 `IG-LITE.md` specifies the **consumer-facing profile** of the protocol family. v0.1.1
 established the informed-consent evidence baseline (disclosure objects, physical
@@ -97,7 +97,7 @@ and what the user saw was authorized by the user* (§6.1).
 
 Three design positions distinguish it from the core specification (unchanged from v0.1):
 
-| | Core (v2.0) | Consumer (IG-Lite v0.2) |
+| | Core (v2.0) | Consumer (IG-Lite v0.2.1) |
 |---|---|---|
 | **Assurance anchor** | enterprise / financial-grade paths | customer-service dispute-resolution grade |
 | **Confirmation endpoint** | independent endpoints incl. dedicated hardware | in-band first (phone / app / wearable); hardware optional, graded by capability |
@@ -108,12 +108,15 @@ grades *delivery* by the same honesty discipline: what a device can attest (incl
 `secure_clock`) decides what evidence level it may claim. Overstating either downgrades
 the evidence to the actual mechanism — the claim takes the hit, not the user.
 
-**Status:** draft v0.2, authored in Chinese, open for community review. The Registry
-schemas and D1/D2 receipts are **specification-defined**; the pseudocode-level reference
-covers the issuance fail branch, fidelity checks and nonce-hash computation. Device-signed
-delivery channels await DCC-B+ hardware. **"Specified" ≠ "implemented"** — the
-implementation-status statement (§12) is normative for all external claims. The
-neutral-custodian role has **no** production implementation yet.
+**Status:** draft v0.2.1, authored in Chinese, open for community review. v0.2.1 is a
+cross-reference erratum with no change to mechanism semantics: it corrects the Core/CA
+attribution, disambiguates Core architecture layers (Layer 0–Layer 3) from the LoA levels
+(L0–L3), and makes the terminology self-contained. The Registry schemas and D1/D2 receipts
+are **specification-defined**; the pseudocode-level reference covers the issuance fail
+branch, fidelity checks and nonce-hash computation. Device-signed delivery channels await
+DCC-B+ hardware. **"Specified" ≠ "implemented"** — the implementation-status statement
+(§12) is normative for all external claims. The neutral-custodian role has **no**
+production implementation yet.
 
 ## Repository contents
 
@@ -131,8 +134,8 @@ intentgrant/
 │   └── SPECIFICATION.pdf           specification, for external distribution
 ├── profiles/
 │   └── lite/
-│       ├── IG-LITE.md              IG-Lite consumer profile, v0.2 draft (Chinese)
-│       └── IG-LITE-PSEUDOCODE.md   pseudocode-level reference (v0.2: required-fail branch,
+│       ├── IG-LITE.md              IG-Lite consumer profile, v0.2.1 draft (Chinese)
+│       └── IG-LITE-PSEUDOCODE.md   pseudocode-level reference (v0.2.1: required-fail branch,
 │                                   fidelity checks, nonce-hash)
 └── bindings/
     └── README.md                   transport bindings (IG-MCP interface: to be added)
@@ -160,7 +163,7 @@ constitute commercial validation.
   set out in the `LICENSE` file is operative.
 - **Role:** This repo serves both as *proof-of-record* for the protocol's original definition
   and implementation, and as the open review channel for drafts, including the Consumer
-  Profile (IG-Lite) v0.1–v0.2.
+  Profile (IG-Lite) v0.1–v0.2.1.
 - **Language:** The normative specs (`core/SPECIFICATION.md`, `profiles/lite/IG-LITE.md`) are
   authored in Chinese. This README and the `NOTICE` file are provided in English for
   international review.

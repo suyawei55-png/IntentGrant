@@ -15,7 +15,7 @@ Su Yawei (苏亚伟).
   - Neutral Release (v2.0):            2026-09-06
   - Initial public disclosure of the
     framework:                         TRAE community forum, 2026-08
-  - Consumer Profile (IG-Lite) v0.1–v0.2:  2026-09
+  - Consumer Profile (IG-Lite) v0.1–v0.2.1: 2026-09
 
 This repository serves as proof-of-record for the protocol's original
 definition and implementation. The normative specification is authored
@@ -82,7 +82,7 @@ License 2.0 is operative.
 
 It functions both as proof-of-record for the protocol's original
 definition and as the open review channel for drafts, including the
-Consumer Profile (IG-Lite) v0.1–v0.2.
+Consumer Profile (IG-Lite) v0.1–v0.2.1.
 
 Implementation-status claims are graded in the specifications
 themselves; nothing in this repository should be read as a claim of
