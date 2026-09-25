@@ -75,7 +75,8 @@ interop claims (see IG-Lite §2.2–2.3).
 
 ## Consumer Profile — IG-Lite v0.2.1 (draft)
 
-`IG-LITE.md` specifies the **consumer-facing profile** of the protocol family. v0.1.1
+`IG-LITE.md` specifies the **consumer-facing profile** of the protocol family; a
+non-normative English translation is published alongside it as `IG-LITE.en.md`. v0.1.1
 established the informed-consent evidence baseline (disclosure objects, physical
 confirmation capture, grants, mechanism-graded assurance, neutral hash custody).
 **v0.2 closes the two remaining gaps** in that baseline:
@@ -99,7 +100,7 @@ Three design positions distinguish it from the core specification (unchanged fro
 
 | | Core (v2.0) | Consumer (IG-Lite v0.2.1) |
 |---|---|---|
-| **Assurance anchor** | enterprise / financial-grade paths | customer-service dispute-resolution grade |
+| **Assurance anchor** | endpoint private-key signatures (in-SE signing is production design intent); no CA-certified legal-effect track is defined | customer-service dispute-resolution grade |
 | **Confirmation endpoint** | independent endpoints incl. dedicated hardware | in-band first (phone / app / wearable); hardware optional, graded by capability |
 | **Custody model** | in-domain audit trail | neutral custodian as a hash log — *hash now, reveal on dispute* |
 
@@ -134,9 +135,10 @@ intentgrant/
 │   └── SPECIFICATION.pdf           specification, for external distribution
 ├── profiles/
 │   └── lite/
-│       ├── IG-LITE.md              IG-Lite consumer profile, v0.2.1 draft (Chinese)
-│       └── IG-LITE-PSEUDOCODE.md   pseudocode-level reference (v0.2.1: required-fail branch,
-│                                   fidelity checks, nonce-hash)
+│       ├── IG-LITE.md                 IG-Lite consumer profile, v0.2.1 (Chinese, normative)
+│       ├── IG-LITE.en.md              English translation of the consumer profile
+│       ├── IG-LITE-PSEUDOCODE.md      pseudocode-level reference, v0.2.1 (Chinese)
+│       └── IG-LITE-PSEUDOCODE.en.md   English translation of the pseudocode reference
 └── bindings/
     └── README.md                   transport bindings (IG-MCP interface: to be added)
 ```
@@ -165,8 +167,12 @@ constitute commercial validation.
   and implementation, and as the open review channel for drafts, including the Consumer
   Profile (IG-Lite) v0.1–v0.2.1.
 - **Language:** The normative specs (`core/SPECIFICATION.md`, `profiles/lite/IG-LITE.md`) are
-  authored in Chinese. This README and the `NOTICE` file are provided in English for
-  international review.
+  authored in Chinese. Non-normative English translations of the consumer profile and its
+  pseudocode reference are published alongside them as `IG-LITE.en.md` and
+  `IG-LITE-PSEUDOCODE.en.md`; the Chinese source controls if the two diverge. In the English
+  editions, Chinese statutory provisions are cited as `Article N`, while `§N` is reserved for
+  sections of the IG-Lite specification. This README and the `NOTICE` file are provided in
+  English for international review.
 - **Public disclosure:** An initial framework was published on the TRAE community forum in
   **Aug 2026**; the full Neutral Release (v2.0) of the specification was completed
   **2026-09-06**.

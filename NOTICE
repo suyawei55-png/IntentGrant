@@ -16,11 +16,13 @@ Su Yawei (苏亚伟).
   - Initial public disclosure of the
     framework:                         TRAE community forum, 2026-08
   - Consumer Profile (IG-Lite) v0.1–v0.2.1: 2026-09
+  - IG-Lite English editions:          2026-09
 
 This repository serves as proof-of-record for the protocol's original
 definition and implementation. The normative specification is authored
-in Chinese; this file and the README are provided in English for
-international review.
+in Chinese; non-normative English translations of the consumer profile
+and its pseudocode reference are published alongside it. This file and
+the README are provided in English for international review.
 
 -----------------------------------------------------------------------
 2. Specification neutrality
