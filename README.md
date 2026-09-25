@@ -91,14 +91,17 @@ gaps** in that baseline:
   Normative force comes from the statutory sources, published with per-item verification
   status (§6.6).
 - **Delivery evidence (§4.7)** — a **Delivery Receipt (D1)** capturing the procedural fact
-  of "a conspicuous viewing opportunity was offered" on weak surfaces, and a **Transit
-  Fidelity Receipt (D2)** proving the relay did not swap the disclosure between storage
-  and display. Delivery tiers are orthogonal to assurance levels (§5.6: combined level =
-  max).
+  that the disclosure was presented conspicuously in the manner required by the
+  specification, establishing a presentation event and an opportunity for review without
+  proving that the user actually read or understood it; and a **Transit Fidelity Receipt
+  (D2)** proving the relay did not swap the disclosure between storage and display.
+  Delivery tiers are orthogonal to assurance levels (§5.6: combined level = max).
 
-The complete evidence chain in one sentence: *the disclosure was complete; it remained
-intact; that same disclosure was actually presented for review; and the person
-affirmatively authorized the action as presented* (§6.1).
+The complete evidence chain in one sentence: *the Disclosure Object contained every element
+required by the applicable baseline; the same disclosure remained intact throughout the
+chain; that same disclosure was actually presented conspicuously in the manner required by
+the specification for the user's review; and the person affirmatively authorized the
+specific action as presented (with evidentiary strength governed by LoA)* (§6.1).
 
 Three design positions distinguish it from the core specification (unchanged from v0.1):
 
